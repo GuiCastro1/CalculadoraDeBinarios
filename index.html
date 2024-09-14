@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="IMG/6.png" type="image/x-icon">
+  <link rel="stylesheet" href="CSS/HOME.css">
+  <title>Calculadora Decimal para Binário</title>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <div class="content">
+    <p>Calculadoras de Binários.</p>
+    <div class="button-container">
+      <button class="button1" onclick="window.location.href='HTML/Calculadora.html'">Começar</button>
+    </div>
+  </div>
+  <script type="module">
+    import * as datGui from "https://cdn.skypack.dev/dat.gui@0.7.7";
+
+    const state = {
+      fps: 60,
+      color: "#0f0",
+      charset: "0123456789ABCDEF",
+      size: 10
+    };
+
+    // Create GUI but do not add it to the DOM
+    const gui = new datGui.GUI({ autoPlace: false });
+
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+
+    let w, h, p;
+    const resize = () => {
+      w = canvas.width = innerWidth;
+      h = canvas.height = innerHeight;
+
+      p = Array(Math.ceil(w / state.size)).fill(0);
+    };
+    window.addEventListener("resize", resize);
+    resize();
+
+    const random = (items) => items[Math.floor(Math.random() * items.length)];
+
+    const draw = () => {
+      ctx.fillStyle = "rgba(0,0,0,.05)";
+      ctx.fillRect(0, 0, w, h);
+      ctx.fillStyle = state.color;
+
+      ctx.font = state.size + 'px sans-serif';
+      for (let i = 0; i < p.length; i++) {
+        let v = p[i];
+        ctx.fillText(random(state.charset), i * state.size, v);
+        p[i] = v >= h || v >= 10000 * Math.random() ? 0 : v + state.size;
+      }
+    };
+
+    let interval = setInterval(draw, 1000 / state.fps);
+    const fpsCtrl = gui.add(state, "fps").min(1).max(120).step(1);
+    fpsCtrl.onFinishChange((fps) => {
+      if (interval) {
+        clearInterval(interval);
+      }
+      interval = setInterval(draw, 1000 / fps);
+    });
+  </script>
+</body>
+</html>
