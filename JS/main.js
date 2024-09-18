@@ -143,5 +143,5 @@ document.getElementById("testetres").addEventListener("click", function () {
     // Concatenar os números
     const concatenatedResult = numbers[0] + numbers[1];
     // Mostrar o resultado concatenado
-    document.getElementById('resultadoSoma').textContent = `Concatenado: ${concatenatedResult}`;
+    document.getElementById('resultadoSoma').textContent = `O resultado é: ${concatenatedResult}`;
 });
