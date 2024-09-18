@@ -17,7 +17,7 @@ body{
 }
 .filho{
     height: 350px;
-    width: 250px;
+    width: 300px;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
